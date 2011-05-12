@@ -1,3 +1,9 @@
+
+// current thinking: return area signatures as json (currently they are in xml) and have them directly converted into javascript objects.
+// after they are fetched, they shoud be saved to the local object store.
+// Perhaps this thing should "listen" for static signature maps to fetch.
+// Maybe this should be renamed "Network.js"
+
 function supports_html5_storage() {
     try {
 	return 'localStorage' in window && window['localStorage'] !== null;
