@@ -1,0 +1,11 @@
+<!ENTITY xulschoolhello.mole.label            "Mole">
+<!ENTITY xulschoolhello.info.label            "Information">
+<!ENTITY xulschoolhello.hello.label            "Hello from Mole!">
+<!ENTITY xulschoolhello.greeting.label            "Hello from Mole!">
+<!ENTITY xulschoolhello.hello.more.label       "Location Details">
+<!ENTITY xulschoolhello.hello.details.label       "Location Details">
+<!ENTITY xulschoolhello.hello.about.label       "About Mole">
+<!ENTITY xulschoolhello.hello.fcabout.label       "About Mole (fox)">
+<!ENTITY xulschoolhello.helloMenu.accesskey    "l">
+<!ENTITY xulschoolhello.helloItem.accesskey    "H">
+<!ENTITY xulschoolhello.helloItemMore.accesskey "z">

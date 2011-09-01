@@ -1,0 +1,119 @@
+/*
+FoxClocks extension for Mozilla Firefox/Thunderbird
+Copyright (C) 2005-2011 Andy McDonald / www.stemhaus.com
+For licensing terms, please refer to readme.txt in this extension's '.xpi'
+package or its installation directory on your computer.
+*/
+
+/* AFM - toolbar button image ends up getting margin 1px from chrome://browser/skin/browser.css
+making the text of 'icon and text mode' misaligned with the text of the built-in buttons, which don't get this */
+#foxclocksoverlay-toolbarbutton-clocks
+{ list-style-image: url("chrome://foxclocks/skin/toolbarbutton_large.png"); }
+
+toolbar[iconsize="small"] #foxclocksoverlay-toolbarbutton-clocks
+{ list-style-image: url("chrome://foxclocks/skin/toolbarbutton_small.png"); }
+
+#foxclocksoverlay-statusbarpanel-icon
+{ list-style-image: url("chrome://foxclocks/skin/toolbarbutton_16x16.png"); }
+
+#foxclocksoverlay-clock-tooltip { max-height: none; max-width: none; }
+#foxclocksoverlay-clock-tooltip image { margin-left: 1px; margin-right: 1px; }
+#foxclocksoverlay-clock-tooltip label { margin-top: 1px; margin-bottom: 1px; }
+#foxclocksoverlay-clock-tooltip label.location { -moz-margin-end: 0px }
+#foxclocksoverlay-clock-tooltip label.time { -moz-margin-start: 0px }
+
+/*
+AFM - not enough for our needs
+#fc-zonepicker-searchbox input { color: graytext; }
+#fc-zonepicker-searchbox input:focus { color: inherit; }
+*/
+#fc-zonepicker-header, #fc-locationlist-header { height: 2.2em; }
+#fc-zonepicker-searchbox { padding: 1px; }
+#fc-zonepicker-searchbox.fc-zonepicker-searchbox-active { color: inherit; }
+#fc-zonepicker-searchbox.fc-zonepicker-searchbox-inactive { color: graytext; }
+#fc-zonepicker-searchbox.fc-zonepicker-searchbox-no-match { color: red; }
+
+/* AFM - don't want the link to be obtrusive */
+#fc-foxclocks-version-label { text-decoration: none; }
+#fc-foxclocks-version-label:hover { text-decoration: underline; color: -moz-hyperlinktext; }
+#fc-foxclocks-version-label:active { text-decoration: underline; color: -moz-activehyperlinktext; }
+
+/* AFM - don't need to hide twisty if we don't have 'primary="true"' on a treecol, but anyway, this works */
+#fc-watchlist treechildren::-moz-tree-twisty
+{
+	/* AFM - get rid of space for twisty in Watchlist */
+	padding-right: 2px !important;
+	width: 0px !important;
+}
+
+#fc-watchlist treechildren::-moz-tree-image { margin-right: 6px; }
+/* AFM - http://www.xulplanet.com/tutorials/xultu/treestyle.html. Didn't notice dropBefore and dropAfter
+until it was too late, but they're not immediately working. To revisit */
+#fc-watchlist treechildren::-moz-tree-row(foxclocks-drop-above) { border-top-width: 1px; border-top-color: -moz-dialogtext; border-top-style: solid; }
+#fc-watchlist treechildren::-moz-tree-row(foxclocks-drop-below) { border-bottom-width: 1px; border-bottom-color: -moz-dialogtext; border-bottom-style: solid; }
+
+/* AFM - hopefully big enough to hold long date formats */
+#fc-data-update-last-status-value, fc-data-update-next-value { min-width: 20em; }
+	
+#fc-format-custom-textbox-input, #fc-format-custom-textbox-preview { min-width: 16em; }
+	
+#fc-about-header, #fc-welcome-header, #fc-update-header { max-width: 240px; }
+#fc-about-message-box, #fc-welcome-message-box, #fc-update-message-box { max-width: 275px; }
+
+/* AFM - seem to need a min-width just to get it to work
+   The 24em is something of a magic number - we want to show a reasonable amount before we start cropping;
+   if we do overflow (by the caption overflowing [big font, eg] or by too long a name in the textbox),
+   the groupbox overflows. Can't mitigate the groupbox because the caption ends up
+   below it. Without mitigation, the panel overflows too */
+.foxclocks-paneloverflow-mitigation { overflow-x: hidden; }
+#fc-zoneinfo-currentlocation-caption  { min-width: 1em; max-width: 24em; }
+#fc-zoneinfo-zone-caption { min-width: 1em; max-width: 30em; }
+
+.fc-zoneinfo-zone-caption-flag { margin-left: 2px; margin-right: 3px; }
+#fc-zoneinfo-display-flag-image { max-width: 19px; max-height: 19px; }
+#fc-zoneinfo-display-style-groupbox checkbox { margin-left: 2px; margin-right: 2px; }
+#fc-zoneinfo-display-preset-flag-container { display: block; width: 400px; height: 255px; }
+image.fc-zoneinfo-display-preset-flag { margin: 3px; } 
+
+.foxclocks-errorstate { color: red; }
+.foxclocks-simpleinfo-window { min-width: 275px; }
+
+.foxclocks-bold { font-weight: bold; }
+.foxclocks-italic { font-style: italic; }
+.foxclocks-underline { text-decoration: underline; }
+
+/* AFM - rubbish timepicker. If I had brains I'd write my own widget */
+.foxclocks-timepicker-hour { margin-right: 0px; }
+.foxclocks-timepicker-colon { margin-left: 1px; margin-right: 1px; }
+.foxclocks-timepicker-min { margin-left: 0px; margin-right: 0px; }
+.foxclocks-timepicker-ampm { margin-left: 0px; }
+
+/* AFM - ditto. Extra pixel on the minutes symbol because we use an apostrophe,
+   rather than prime, which Mozilla doesn't want to render */
+.foxclocks-coord-deg { width: 3em; margin-right: 0px; }
+.foxclocks-coord-degsymbol { margin-left: 2px; margin-right: 2px; }
+.foxclocks-coord-min { width: 2em; margin-left: 0px; margin-right: 0px; }
+.foxclocks-coord-minsymbol { margin-left: 3px; margin-right: 2px; }
+.foxclocks-coord-sec { width: 2em; margin-left: 0px; margin-right: 0px; }
+.foxclocks-coord-secsymbol { margin-left: 2px; margin-right: 2px; }
+.foxclocks-coord-nesw { margin-left: 0px; }
+
+.foxclocks-custom-add-button 
+{
+	/* AFM - other themes don't like this: -moz-appearance: toolbarbutton !important; */
+	/* AFM - looks like hell in Win XP theme: -moz-appearance: button-small !important; */
+	min-width: 0px !important;
+	margin-top: 0px !important;
+	margin-bottom: 0px !important;
+}
+
+/* AFM - otherwise deeply hideous */
+.foxclocks-colourpicker { background-color: transparent !important; }
+.foxclocks-curr-zone { font-weight: bold; }
+
+.foxclocks-clock[src] { padding-left: 3px; }
+
+/* AFM - the labels in clocks in the toolbar have class toolbarbutton-text, which
+   will sets the text to 'display: none' when the toolbars are configured to display icons only, so we
+   override here */
+.foxclocks-toolbar-clock-text { display: inline !important; }

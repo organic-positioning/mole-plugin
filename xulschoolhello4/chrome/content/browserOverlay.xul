@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+
+<?xml-stylesheet type="text/css" href="chrome://global/skin/" ?>
+<?xml-stylesheet type="text/css"
+  href="chrome://xulschoolhello/skin/browserOverlay.css" ?>
+
+<!DOCTYPE overlay SYSTEM
+  "chrome://xulschoolhello/locale/browserOverlay.dtd">
+
+<overlay id="xulschoolhello-browser-overlay"
+  xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+  <script type="application/x-javascript"
+    src="chrome://xulschoolhello/content/browserOverlay.js" />
+
+  <script type="application/x-javascript"
+    src="chrome://xulschoolhello/content/common.js" />
+
+  <stringbundleset id="stringbundleset">
+    <stringbundle id="xulschoolhello-string-bundle"
+      src="chrome://xulschoolhello/locale/browserOverlay.properties" />
+  </stringbundleset>
+
+  <menupopup id="menu_ToolsPopup">
+    <menu id="xulschoolhello-hello-menu" label="&xulschoolhello.mole.label;"
+      accesskey="&xulschoolhello.helloMenu.accesskey;"
+      insertafter="javascriptConsole,devToolsSeparator">
+      <menupopup>
+        <menuitem label="&xulschoolhello.info.label;"
+          oncommand="XULSchoolChrome.BrowserOverlay.sayHello(event);" />
+        <menuitem label="&xulschoolhello.hello.details.label;"
+          oncommand="XULSchoolChrome.BrowserOverlay.sayMore(event);" />
+        <menuitem label="&xulschoolhello.hello.about.label;"
+          oncommand="XULSchoolChrome.BrowserOverlay.sayAbout(event);" />
+        <menuitem label="&xulschoolhello.hello.fcabout.label;"
+          oncommand="XULSchoolChrome.BrowserOverlay.sayAbout2(event);" />
+      </menupopup>
+    </menu>
+  </menupopup>
+
+  <menubar id="main-menubar">
+    <menu id="xulschoolhello-hello-menu-outer" label="&xulschoolhello.hello.label;"
+      accesskey="&xulschoolhello.helloMenu.accesskey;" insertafter="helpMenu">
+      <menupopup>
+        <menuitem id="xulschoolhello-hello-menu-item"
+          label="&xulschoolhello.hello.label;"
+          accesskey="&xulschoolhello.helloItem.accesskey;"
+          oncommand="XULSchoolChrome.BrowserOverlay.sayMore(event);" />
+      </menupopup>
+    </menu>
+  </menubar>
+
+
+<dialog
+  id="myDialogId"
+  title="My Dialog"
+  ondialogaccept="return onOK();"
+  onload="onLoad();"
+  persist="screenX screenY width height"
+  class="testclass"
+  >
+
+  <script type="application/javascript" src="chrome://xulschoolhello/content/mydialog.js"/>
+  <grid>
+    <columns><column/><column/></columns>
+    <rows>
+      <row align="center"><label value="Estimate"/></row>
+      <row align="center"><label value="Building"/><textbox id="Building"/></row>
+      <row><label value="Room"/><textbox id="Room"/></row>
+    </rows>
+  </grid>
+</dialog>
+
+</overlay>
