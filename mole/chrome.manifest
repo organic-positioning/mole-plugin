@@ -1,0 +1,5 @@
+content   mole              jar:chrome/mole.jar!/content/
+skin      mole  classic/1.0 jar:chrome/mole.jar!/skin/
+locale    mole  en-US       jar:chrome/mole.jar!/locale/en-US/
+
+overlay chrome://browser/content/browser.xul  chrome://mole/content/browserOverlay.xul

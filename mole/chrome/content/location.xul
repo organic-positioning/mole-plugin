@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Mole extension for Mozilla Firefox/Thunderbird
+Copyright (C) 2011 Nokia
+For licensing terms, please refer to readme.txt in this extension's '.xpi'
+package or its installation directory on your computer.
+-->
+
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://mole/skin/mole.css" type="text/css"?>
+
+<!DOCTYPE dialog SYSTEM "chrome://mole/locale/mole.dtd">
+
+
+<dialog id="fc-about"
+		xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+		onload="about.onAboutLoad()"
+		onunload="about.onAboutUnload()"
+		ondialogaccept="about.onAboutAccept()"
+		ondialogcancel="about.onAboutCancel()"
+		ondialogextra1="about.onAboutUpdate()"
+		buttons="accept,cancel,extra1"
+		buttonlabelextra1="&misc.update;"
+		title="&about.title;">
+	
+	<keyset>
+		<key modifiers="accel" key="W" oncommand="window.close()"/>
+	</keyset>
+	
+	<groupbox>
+		<hbox align="center">
+			<image src="chrome://mole/skin/mole-binder.png"/>
+			<spacer width="16px"/>
+			<description id="fc-about-header"></description>
+		</hbox>
+
+		<description/>
+		<vbox id="fc-about-message-box"/>
+
+		<label value="Building"/><textbox id= "Building"/>
+		<label value="Room"/><textbox id= "Room"/>
+		<label value="City"/><textbox id= "City"/>
+		<label value="State"/><textbox id= "State"/>
+		<label value="Country"/><textbox id= "Country"/>
+		<label value="Country"/><textbox id= "Country"/>
+		<label id="fc-about-url-label" class="text-link"/>
+		<label id="fc-about-gmt-label" />
+		<label id="fc-about-url-label" class="text-link"/>
+		<label id="fc-about-gmt-label" hidden="true"/>
+	</groupbox>
+
+	<data id="fc-about-message" label="&about.message;"/>
+
+	<script type="application/x-javascript" src="chrome://mole/content/common.js" />
+	<script type="application/x-javascript"><![CDATA[
+		
+	// ====================================================================================
+	function FoxClocks_About()
+	{
+		this.hTimer = null;
+	}
+
+	// ====================================================================================
+	FoxClocks_About.prototype =
+	{
+		// ====================================================================================
+		onAboutLoad : function()
+		{
+			var headerText = "Current Location Estimate";
+
+			document.getElementById("fc-about-header").setAttribute("value", headerText);
+			document.getElementById("Building").setAttribute("value", "Stata");
+			document.getElementById("Room").setAttribute("value", "32-G914");
+			document.getElementById("City").setAttribute("value", "Cambridge");
+			document.getElementById("State").setAttribute("value", "MA");
+			document.getElementById("Country").setAttribute("value", "USA");
+			
+			document.documentElement.getButton("accept").focus();
+
+			this.onTimer();
+			this.hTimer = window.setInterval(this.onTimer, 500, this);
+		},
+		
+		// ====================================================================================
+		onAboutUnload : function()
+		{
+			// AFM - treat closing the window with the x same as pressing ok
+			//
+			// this.onAboutAccept();
+			window.clearInterval(this.hTimer);
+		},
+		
+		// ====================================================================================
+		onAboutCancel : function()
+		{
+    		// let stringBundle = document.getElementById("mole-string-bundle");
+    		// let message = stringBundle.getString("mole.noaction.label");
+		window.alert("Cancel");
+		},
+		// ====================================================================================
+		onAboutUpdate : function()
+		{
+    		// let stringBundle = document.getElementById("mole-string-bundle");
+    		// let message = stringBundle.getString("mole.updated.label");
+		// window.alert(message);
+		window.alert("Update");
+		},
+		// ====================================================================================
+		onAboutAccept : function()
+		{
+
+    		// let stringBundle = document.getElementById("mole-string-bundle");
+    		// let message = stringBundle.getString("mole.confirmed.label");
+		// window.alert(message);
+		window.alert("Accept");
+
+		},
+
+		// ====================================================================================
+		onTimer : function()
+		{
+			document.getElementById("fc-about-gmt-label").setAttribute("value", (new Date()).toUTCString());
+		}
+	}
+
+	var about = new FoxClocks_About();
+			
+	]]></script>
+</dialog>

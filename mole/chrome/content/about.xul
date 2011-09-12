@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Based on FoxClocks extension for Mozilla Firefox/Thunderbird
+Copyright (C) 2005-2011 Andy McDonald / www.stemhaus.com
+For licensing terms, please refer to readme.txt in this extension's '.xpi'
+package or its installation directory on your computer.
+-->
+
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://mole/skin/mole.css" type="text/css"?>
+
+<!DOCTYPE dialog SYSTEM "chrome://mole/locale/mole.dtd">
+
+<dialog id="fc-about"
+		xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+		onload="about.onAboutLoad()"
+		onunload="about.onAboutUnload()"
+		ondialogaccept="about.onAboutAccept()"
+		buttons="accept"
+		title="&about.title;">
+	
+	<keyset>
+		<key modifiers="accel" key="W" oncommand="window.close()"/>
+	</keyset>
+	
+	<groupbox>
+		<hbox align="center">
+			<image src="chrome://mole/skin/icon.png"/>
+			<spacer width="16px"/>
+			<description id="fc-about-header"></description>
+		</hbox>
+
+		<description/>
+		<vbox id="fc-about-message-box"/>
+
+		<label id="fc-about-url-label" class="text-link"/>
+		<label id="fc-about-gmt-label" hidden="true"/>
+	</groupbox>
+
+	<data id="fc-about-message" label="&about.message;"/>
+
+	<script type="application/x-javascript" src="chrome://mole/content/common.js" />
+	<script type="application/x-javascript"><![CDATA[
+		
+	// ====================================================================================
+	function Mole_About()
+	{
+		this.hTimer = null;
+	}
+
+	// ====================================================================================
+	Mole_About.prototype =
+	{
+		// ====================================================================================
+		onAboutLoad : function()
+		{
+			var appInfo = fc_gUtils.getAppInfo();
+			var dataSource = fc_gZoneManager.dataSource;
+
+			headerText += " (" + dataSource.name + " " + dataSource.version + ")";
+
+			document.getElementById("fc-about-header").setAttribute("value", headerText);
+			
+			var messageBox = document.getElementById("fc-about-message-box");
+			var messageLines = document.getElementById("fc-about-message").getAttribute("label").split("|");
+			
+			for (var i = 0; i < messageLines.length; i++)
+			{
+				var description = document.createElement("description");
+				var messageLine = document.createTextNode(messageLines[i]);
+
+				description.appendChild(messageLine);
+				messageBox.appendChild(description);
+			}
+			
+			var urlLabel = document.getElementById("fc-about-url-label");
+			urlLabel.setAttribute("value", fc_gUtils.FC_URL_FOXCLOCKSHOME);
+			urlLabel.setAttribute("href", fc_gUtils.FC_URL_FOXCLOCKSHOME);
+				
+			document.documentElement.getButton("accept").focus();
+
+			this.onTimer();
+			this.hTimer = window.setInterval(this.onTimer, fc_gUtils.FC_CLOCK_UPDATE_INTERVAL, this);
+		},
+		
+		// ====================================================================================
+		onAboutUnload : function()
+		{
+			// AFM - treat closing the window with the x same as pressing ok
+			//
+			this.onAboutAccept();
+			window.clearInterval(this.hTimer);
+		},
+		
+		// ====================================================================================
+		onAboutAccept : function()
+		{
+		},
+
+		// ====================================================================================
+		onTimer : function()
+		{
+			document.getElementById("fc-about-gmt-label").setAttribute("value", (new Date()).toUTCString());
+		}
+	}
+
+	var about = new Mole_About();
+			
+	]]></script>
+</dialog>

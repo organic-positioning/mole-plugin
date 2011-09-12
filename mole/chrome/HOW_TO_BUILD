@@ -1,0 +1,5 @@
+in the mole/chrome/content directory use the following command
+I put mole in Desktop for convenience and so the mole.xpi file ends
+up in Desktop too.
+
+pushd .. ; zip -r mole.jar content locale skin ; pushd .. ; zip -r ../mole.xpi chrome chrome.manifest install.rdf  ; popd ; popd
