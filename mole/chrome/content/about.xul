@@ -12,12 +12,12 @@ package or its installation directory on your computer.
 
 <!DOCTYPE dialog SYSTEM "chrome://mole/locale/mole.dtd">
 
-<dialog id="fc-about"
+<dialog id="mole-about"
 		xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
 		onload="about.onAboutLoad()"
 		onunload="about.onAboutUnload()"
 		ondialogaccept="about.onAboutAccept()"
-		buttons="accept"
+		buttons=","
 		title="&about.title;">
 	
 	<keyset>
@@ -26,22 +26,28 @@ package or its installation directory on your computer.
 	
 	<groupbox>
 		<hbox align="center">
-			<image src="chrome://mole/skin/icon.png"/>
+			<image src="chrome://mole/skin/mole-binder.png"/>
 			<spacer width="16px"/>
-			<description id="fc-about-header"></description>
+			<description id="mole-about-header"></description>
 		</hbox>
 
 		<description/>
-		<vbox id="fc-about-message-box"/>
+		<vbox id="mole-about-message-box"/>
 
-		<label id="fc-about-url-label" class="text-link"/>
-		<label id="fc-about-gmt-label" hidden="true"/>
+		<label id="mole-about-url-label" class="text-link"/>
+		<label id="mole-about-gmt-label" hidden="true"/>
 	</groupbox>
 
-	<data id="fc-about-message" label="&about.message;"/>
+	<data id="mole-about-message" label="&about.message;"/>
 
+	<stringbundleset id="stringbundleset">
+	      <stringbundle id="mole-string-bundle"
+	            src="chrome://mole/locale/mole.properties" />
+	</stringbundleset>
 	<script type="application/x-javascript" src="chrome://mole/content/common.js" />
-	<script type="application/x-javascript"><![CDATA[
+	<script type="application/x-javascript">
+
+	<![CDATA[
 		
 	// ====================================================================================
 	function Mole_About()
@@ -55,15 +61,18 @@ package or its installation directory on your computer.
 		// ====================================================================================
 		onAboutLoad : function()
 		{
-			var appInfo = fc_gUtils.getAppInfo();
-			var dataSource = fc_gZoneManager.dataSource;
+			// var appInfo = mole_gUtils.getAppInfo();
+			// var dataSource = mole_gZoneManager.dataSource;
 
-			headerText += " (" + dataSource.name + " " + dataSource.version + ")";
+			// headerText += " (" + dataSource.name + " " + dataSource.version + ")";
+			let stringBundle = document.getElementById("mole-string-bundle");
+			let message = stringBundle.getString("mole.about.label");
+			var headerText = message;
 
-			document.getElementById("fc-about-header").setAttribute("value", headerText);
+			document.getElementById("mole-about-header").setAttribute("value", headerText);
 			
-			var messageBox = document.getElementById("fc-about-message-box");
-			var messageLines = document.getElementById("fc-about-message").getAttribute("label").split("|");
+			var messageBox = document.getElementById("mole-about-message-box");
+			var messageLines = document.getElementById("mole-about-message").getAttribute("label").split("|");
 			
 			for (var i = 0; i < messageLines.length; i++)
 			{
@@ -74,14 +83,14 @@ package or its installation directory on your computer.
 				messageBox.appendChild(description);
 			}
 			
-			var urlLabel = document.getElementById("fc-about-url-label");
-			urlLabel.setAttribute("value", fc_gUtils.FC_URL_FOXCLOCKSHOME);
-			urlLabel.setAttribute("href", fc_gUtils.FC_URL_FOXCLOCKSHOME);
+			var urlLabel = document.getElementById("mole-about-url-label");
+			urlLabel.setAttribute("value", "Mole Developer Page");
+			urlLabel.setAttribute("href", "https://projects.developer.nokia.com/mole");
 				
 			document.documentElement.getButton("accept").focus();
 
 			this.onTimer();
-			this.hTimer = window.setInterval(this.onTimer, fc_gUtils.FC_CLOCK_UPDATE_INTERVAL, this);
+			this.hTimer = window.setInterval(this.onTimer, 500, this);
 		},
 		
 		// ====================================================================================
@@ -101,7 +110,7 @@ package or its installation directory on your computer.
 		// ====================================================================================
 		onTimer : function()
 		{
-			document.getElementById("fc-about-gmt-label").setAttribute("value", (new Date()).toUTCString());
+			document.getElementById("mole-about-gmt-label").setAttribute("value", (new Date()).toUTCString());
 		}
 	}
 

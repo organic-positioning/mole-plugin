@@ -15,6 +15,10 @@ MOLEChrome.BrowserOverlay = {
   /**
    * Says 'Hello' to the user.
    */
+  onLoad: function() {
+        this.clockUpdateTimer = Components.classes["@mozilla.org/timer;1"].createInstance(Components.interfaces.nsITimer);
+  	this.clockUpdateTimer.init(this, 500, Components.interfaces.nsITimer.TYPE_REPEATING_PRECISE);
+  },
   sayHello : function(aEvent) {
     let stringBundle = document.getElementById("mole-string-bundle");
     let message = stringBundle.getString("mole.random.label");
@@ -31,15 +35,13 @@ MOLEChrome.BrowserOverlay = {
     // This branch is not taken regardless of OK or cancel.
     let stringBundle = document.getElementById("mole-string-bundle");
     let message = stringBundle.getString("mole.confirmed.label");
-
     window.alert(message);
     } else {
     // User clicked cancel. Typically, nothing is done here.
     // This is the branch taken regardless of OK or cancel.
     let stringBundle = document.getElementById("mole-string-bundle");
     let message = stringBundle.getString("mole.noaction.label");
-
-    window.alert(message);
+    // window.alert(message);
     }},
   /**
    * Says 'About' to the user.
@@ -47,10 +49,18 @@ MOLEChrome.BrowserOverlay = {
   sayAbout : function(aEvent) {
     let stringBundle = document.getElementById("mole-string-bundle");
     let message = stringBundle.getString("mole.about.label");
-
     window.alert(message);
   },
 
   sayAbout2 : function(aEvent) {
-    FoxClocks_openWindow("chrome://mole/content/about.xul", "", "chrome,modal,centerscreen,resizable=no"); }
+    FoxClocks_openWindow("chrome://mole/content/about.xul", "", "chrome,modal,centerscreen,resizable=no"); },
+
+  onTimer : function() {
+	window.alert("Tick");
+  },
+  observe : function(subject, topic, data) {
+	// perhaps need to eliminate other events that cause observe to be invoked
+	this.onTimer();
+  }
+
 };

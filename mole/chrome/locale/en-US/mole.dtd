@@ -309,6 +309,8 @@ package or its installation directory on your computer.
 <!ENTITY update.checkbox.launch.label "View changelog">
 <!ENTITY update.checkbox.launch.accesskey "V">
 
+<!ENTITY location.title "Mole">
+<!ENTITY location.message "Copyright © 2011 Nokia">
 <!ENTITY about.title "Mole">
 <!ENTITY about.message "Copyright © 2011 Nokia">
 

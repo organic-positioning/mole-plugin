@@ -31,8 +31,6 @@
         <menuitem label="&mole.hello.details.label;"
           oncommand="MOLEChrome.BrowserOverlay.sayMore(event);" />
         <menuitem label="&mole.hello.about.label;"
-          oncommand="MOLEChrome.BrowserOverlay.sayAbout(event);" />
-        <menuitem label="&mole.hello.fcabout.label;"
           oncommand="MOLEChrome.BrowserOverlay.sayAbout2(event);" />
       </menupopup>
     </menu>
@@ -50,6 +48,9 @@
     </menu>
   </menubar>
 
+<statusbar id="status-bar">
+  <statusbarpanel id="my-panel" label="Status Bar For Mole" />
+</statusbar>
 
 <dialog
   id="myDialogId"

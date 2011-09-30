@@ -13,16 +13,16 @@ package or its installation directory on your computer.
 <!DOCTYPE dialog SYSTEM "chrome://mole/locale/mole.dtd">
 
 
-<dialog id="fc-about"
+<dialog id="mole-vloc"
 		xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
-		onload="about.onAboutLoad()"
-		onunload="about.onAboutUnload()"
-		ondialogaccept="about.onAboutAccept()"
-		ondialogcancel="about.onAboutCancel()"
-		ondialogextra1="about.onAboutUpdate()"
+		onload="moleVloc.onMoleVlocLoad()"
+		onunload="moleVloc.onMoleVlocUnload()"
+		ondialogaccept="moleVloc.onMoleVlocAccept()"
+		ondialogcancel="moleVloc.onMoleVlocCancel()"
+		ondialogextra1="moleVloc.onMoleVlocUpdate()"
 		buttons="accept,cancel,extra1"
 		buttonlabelextra1="&misc.update;"
-		title="&about.title;">
+		title="&location.title;">
 	
 	<keyset>
 		<key modifiers="accel" key="W" oncommand="window.close()"/>
@@ -32,49 +32,45 @@ package or its installation directory on your computer.
 		<hbox align="center">
 			<image src="chrome://mole/skin/mole-binder.png"/>
 			<spacer width="16px"/>
-			<description id="fc-about-header"></description>
+			<description id="mole-vloc-header"></description>
 		</hbox>
 
 		<description/>
-		<vbox id="fc-about-message-box"/>
+		<vbox id="mole-vloc-message-box"/>
 
-		<label value="Building"/><textbox id= "Building"/>
-		<label value="Room"/><textbox id= "Room"/>
-		<label value="City"/><textbox id= "City"/>
-		<label value="State"/><textbox id= "State"/>
-		<label value="Country"/><textbox id= "Country"/>
-		<label value="Country"/><textbox id= "Country"/>
-		<label id="fc-about-url-label" class="text-link"/>
-		<label id="fc-about-gmt-label" />
-		<label id="fc-about-url-label" class="text-link"/>
-		<label id="fc-about-gmt-label" hidden="true"/>
+		<label value="Building"/><textbox  id= "Mole-Vloc-Building"/>
+		<label value="Room"/><textbox id= "Mole-Vloc-Room"/>
+		<label value="City"/><textbox id= "Mole-Vloc-City"/>
+		<label value="State"/><textbox id= "Mole-Vloc-State"/>
+		<label value="Country"/><textbox id= "Mole-Vloc-Country"/>
+		<label id="mole-vloc-gmt-label" />
 	</groupbox>
 
-	<data id="fc-about-message" label="&about.message;"/>
+	<data id="mole-vloc-message" label="&location.message;"/>
 
 	<script type="application/x-javascript" src="chrome://mole/content/common.js" />
 	<script type="application/x-javascript"><![CDATA[
 		
 	// ====================================================================================
-	function FoxClocks_About()
+	function Mole_Vloc()
 	{
 		this.hTimer = null;
 	}
 
 	// ====================================================================================
-	FoxClocks_About.prototype =
+	Mole_Vloc.prototype =
 	{
 		// ====================================================================================
-		onAboutLoad : function()
+		onMoleVlocLoad : function()
 		{
 			var headerText = "Current Location Estimate";
 
-			document.getElementById("fc-about-header").setAttribute("value", headerText);
-			document.getElementById("Building").setAttribute("value", "Stata");
-			document.getElementById("Room").setAttribute("value", "32-G914");
-			document.getElementById("City").setAttribute("value", "Cambridge");
-			document.getElementById("State").setAttribute("value", "MA");
-			document.getElementById("Country").setAttribute("value", "USA");
+			document.getElementById("mole-vloc-header").setAttribute("value", headerText);
+			document.getElementById("Mole-Vloc-Building").setAttribute("value", "Stata");
+			document.getElementById("Mole-Vloc-Room").setAttribute("value", "32-G914");
+			document.getElementById("Mole-Vloc-City").setAttribute("value", "Cambridge");
+			document.getElementById("Mole-Vloc-State").setAttribute("value", "MA");
+			document.getElementById("Mole-Vloc-Country").setAttribute("value", "USA");
 			
 			document.documentElement.getButton("accept").focus();
 
@@ -83,48 +79,75 @@ package or its installation directory on your computer.
 		},
 		
 		// ====================================================================================
-		onAboutUnload : function()
+		onMoleVlocUnload : function()
 		{
 			// AFM - treat closing the window with the x same as pressing ok
 			//
-			// this.onAboutAccept();
+			// this.onMoleVlocAccept();
 			window.clearInterval(this.hTimer);
 		},
 		
 		// ====================================================================================
-		onAboutCancel : function()
+		onMoleVlocCancel : function()
 		{
     		// let stringBundle = document.getElementById("mole-string-bundle");
     		// let message = stringBundle.getString("mole.noaction.label");
-		window.alert("Cancel");
+		// window.alert("Cancel");
 		},
 		// ====================================================================================
-		onAboutUpdate : function()
+		onMoleVlocUpdate : function()
 		{
     		// let stringBundle = document.getElementById("mole-string-bundle");
     		// let message = stringBundle.getString("mole.updated.label");
 		// window.alert(message);
-		window.alert("Update");
+		// window.alert("Update");
 		},
 		// ====================================================================================
-		onAboutAccept : function()
+		onMoleVlocAccept : function()
 		{
 
     		// let stringBundle = document.getElementById("mole-string-bundle");
     		// let message = stringBundle.getString("mole.confirmed.label");
 		// window.alert(message);
-		window.alert("Accept");
-
+		// window.alert("Accept");
 		},
 
 		// ====================================================================================
 		onTimer : function()
 		{
-			document.getElementById("fc-about-gmt-label").setAttribute("value", (new Date()).toUTCString());
+			document.getElementById("mole-vloc-gmt-label").setAttribute("value", (new Date()).toUTCString());
+		let url = "http://localhost.localdomain:50008";
+		let request = Components.classes["@mozilla.org/xmlextras/xmlhttprequest;1"]
+		              .createInstance(Components.interfaces.nsIXMLHttpRequest);
+		request.overrideMimeType("text/xml");
+		request.onload = function(aEvent) {
+		  let responseText = aEvent.target.responseText;
+		  let ind = responseText.indexOf(' ', 45)
+		  let room = responseText.substring(44,ind)
+		  let ind2 = responseText.indexOf(':', ind+1)
+		  let prob = responseText.substring(ind+1, ind2-1)
+		  // let responseXML = aEvent.target.responseXML;
+		  // window.alert("Response XML: " + aEvent.target.responseText);
+		  // window.alert("Room: " + room);
+		  let room_prob = room + " " + prob
+		  // window.alert("ind: " + ind);
+		  // window.alert("ind2: " + ind2);
+		  // window.alert("Prob: " + prob);
+		  // window.alert("Room_prob: " + room_prob);
+		  document.getElementById("Mole-Vloc-Room").setAttribute("value", room_prob);
+		};
+		request.onerror = function(aEvent) {
+		  let responseStatus = aEvent.target.responseText;
+		  let responseXML = aEvent.target.responseXML;
+		  window.alert("Response Status (error): " + aEvent.target.responseText);
+		  // window.alert("Response XML (error): " + aEvent.target.responseXML);
+		};
+		request.open("GET", url, true);
+		request.send(null);
 		}
 	}
 
-	var about = new FoxClocks_About();
+	var moleVloc = new Mole_Vloc();
 			
 	]]></script>
 </dialog>

@@ -6,7 +6,7 @@
 <!ENTITY mole.noaction.label    "Your location has NOT been changed!">
 <!ENTITY mole.updated.label     "Your location has been updated!">
 <!ENTITY mole.hello.more.label  "Location Details">
-<!ENTITY mole.hello.details.label       "Location Details">
+<!ENTITY mole.hello.details.label       "View Location">
 <!ENTITY mole.hello.about.label       "About Mole">
 <!ENTITY mole.hello.fcabout.label       "About Mole (fox)">
 <!ENTITY mole.helloMenu.accesskey    "l">
