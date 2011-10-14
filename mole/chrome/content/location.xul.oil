@@ -116,7 +116,7 @@ package or its installation directory on your computer.
 		onTimer : function()
 		{
 			document.getElementById("mole-vloc-gmt-label").setAttribute("value", (new Date()).toUTCString());
-		let url = "http://localhost.localdomain:4411";
+		let url = "http://localhost.localdomain:50008";
 		let request = Components.classes["@mozilla.org/xmlextras/xmlhttprequest;1"]
 		              .createInstance(Components.interfaces.nsIXMLHttpRequest);
 		request.overrideMimeType("text/xml");
@@ -127,14 +127,14 @@ package or its installation directory on your computer.
 		  let ind2 = responseText.indexOf(':', ind+1)
 		  let prob = responseText.substring(ind+1, ind2-1)
 		  // let responseXML = aEvent.target.responseXML;
-		  window.alert("Response XML: " + aEvent.target.responseText);
+		  // window.alert("Response XML: " + aEvent.target.responseText);
 		  // window.alert("Room: " + room);
-		  // let room_prob = room + " " + prob
+		  let room_prob = room + " " + prob
 		  // window.alert("ind: " + ind);
 		  // window.alert("ind2: " + ind2);
 		  // window.alert("Prob: " + prob);
 		  // window.alert("Room_prob: " + room_prob);
-		  //* document.getElementById("Mole-Vloc-Room").setAttribute("value", room_prob);
+		  document.getElementById("Mole-Vloc-Room").setAttribute("value", room_prob);
 		};
 		request.onerror = function(aEvent) {
 		  let responseStatus = aEvent.target.responseText;
@@ -142,8 +142,8 @@ package or its installation directory on your computer.
 		  window.alert("Response Status (error): " + aEvent.target.responseText);
 		  // window.alert("Response XML (error): " + aEvent.target.responseXML);
 		};
-		request.open("POST", url, true);
-		request.send("{\"action\":\"query\"}");
+		request.open("GET", url, true);
+		request.send(null);
 		}
 	}
 

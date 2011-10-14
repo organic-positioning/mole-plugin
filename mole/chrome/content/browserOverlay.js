@@ -11,14 +11,17 @@ if ("undefined" == typeof(MOLE)) {
 /**
  * Controls the browser overlay for the Hello World extension.
  */
-MOLEChrome.BrowserOverlay = {
+function MOLEChrome_BrowserOverlay() {
+        this.clockUpdateTimer = Components.classes["@mozilla.org/timer;1"].createInstance(Components.interfaces.nsITimer);
+	this.addonbarinitialized = 0;
+}
+MOLEChrome_BrowserOverlay.prototype = {
+  onLoad: function() {
+  	this.clockUpdateTimer.init(this, 500, Components.interfaces.nsITimer.TYPE_REPEATING_PRECISE);
+  },
   /**
    * Says 'Hello' to the user.
    */
-  onLoad: function() {
-        this.clockUpdateTimer = Components.classes["@mozilla.org/timer;1"].createInstance(Components.interfaces.nsITimer);
-  	this.clockUpdateTimer.init(this, 500, Components.interfaces.nsITimer.TYPE_REPEATING_PRECISE);
-  },
   sayHello : function(aEvent) {
     let stringBundle = document.getElementById("mole-string-bundle");
     let message = stringBundle.getString("mole.random.label");
@@ -56,10 +59,26 @@ MOLEChrome.BrowserOverlay = {
     FoxClocks_openWindow("chrome://mole/content/about.xul", "", "chrome,modal,centerscreen,resizable=no"); },
 
   onTimer : function() {
-	window.alert("Tick");
+	// window.alert("Tick");
+	// Here is where clocks/locations should be updated
+	
+	var addonBar = document.getElementById("addon-bar");
+	if (addonBar) {
+  		if (!document.getElementById("mole-statusbarpanel-button")) {
+    		var addonBarCloseButton = document.getElementById("addonbar-closebutton")
+    		// addonBar.insertItem("mole-statusbarpanel-plain", addonBarCloseButton.nextSibling);
+    		// addonBar.insertItem("mole-statusbarpanel-button", addonBarCloseButton.nextSibling);
+    		addonBar.insertItem("mole-statusbarpanel-button");
+    		addonBar.collapsed = false;
+		}
+	}
+	document.getElementById("mole-statusbarpanel-button").setAttribute("value", (new Date()).toUTCString())
   },
   observe : function(subject, topic, data) {
 	// perhaps need to eliminate other events that cause observe to be invoked
+	// window.alert(subject);	// xpconnect wrapped NSITimer
+	// window.alert(topic);	// timer-callback
+	// window.alert(data);	// null
 	this.onTimer();
   }
 

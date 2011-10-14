@@ -13,6 +13,16 @@
   <script type="application/x-javascript"
     src="chrome://mole/content/browserOverlay.js" />
 
+  <script type="application/x-javascript"><![CDATA[
+	var moleChromeBrowserOverlay = new MOLEChrome_BrowserOverlay();
+					
+	window.addEventListener("load", function() { moleChromeBrowserOverlay.onLoad(); },
+		false);
+	window.addEventListener("unload", function() { moleChromeBrowserOverlay.onUnload(); 
+				}, false);
+  ]]></script>
+
+
   <script type="application/x-javascript"
     src="chrome://mole/content/common.js" />
 
@@ -27,11 +37,11 @@
       insertafter="javascriptConsole,devToolsSeparator">
       <menupopup>
         <menuitem label="&mole.info.label;"
-          oncommand="MOLEChrome.BrowserOverlay.sayHello(event);" />
+          oncommand="moleChromeBrowserOverlay.sayHello(event);" />
         <menuitem label="&mole.hello.details.label;"
-          oncommand="MOLEChrome.BrowserOverlay.sayMore(event);" />
+          oncommand="moleChromeBrowserOverlay.sayMore(event);" />
         <menuitem label="&mole.hello.about.label;"
-          oncommand="MOLEChrome.BrowserOverlay.sayAbout2(event);" />
+          oncommand="moleChromeBrowserOverlay.sayAbout2(event);" />
       </menupopup>
     </menu>
   </menupopup>
@@ -43,35 +53,17 @@
         <menuitem id="mole-hello-menu-item"
           label="&mole.hello.label;"
           accesskey="&mole.helloItem.accesskey;"
-          oncommand="MOLEChrome.BrowserOverlay.sayMore(event);" />
+          oncommand="moleChromeBrowserOverlay.sayMore(event);" />
       </menupopup>
     </menu>
   </menubar>
 
-<statusbar id="status-bar">
-  <statusbarpanel id="my-panel" label="Status Bar For Mole" />
-</statusbar>
-
-<dialog
-  id="myDialogId"
-  title="My Dialog"
-  ondialogaccept="return onOK();"
-  onload="onLoad();"
-  persist="screenX screenY width height"
-  class="testclass"
-  >
-
-  <grid>
-    <columns><column/><column/></columns>
-    <rows>
-      <row align="center"><label value="Estimate"/></row>
-      <row align="center"><label value="Building"/><textbox id="Building"/></row>
-      <row><label value="Room"/><textbox id="Room"/></row>
-    </rows>
-  </grid>
-</dialog>
+<toolbarpalette id="BrowserToolbarPalette">
+  <toolbarbutton id="mole-statusbarpanel-plain" accesskey="P" label="Plain"/>
+  <toolbarbutton id="mole-statusbarpanel-button"
+  	class="toolbarbutton-1 chromeclass-toolbar-additional"
+        label="&mole.statusbar.label;"
+        tooltiptext="Mole Lives" />
+</toolbarpalette>
 
 </overlay>
-<!--
-# <script type="application/javascript" src="chrome://mole/content/mydialog.js"/>
--->
